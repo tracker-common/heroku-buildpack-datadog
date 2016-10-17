@@ -12,7 +12,21 @@ else
   exit 1
 fi
 
+if [[ $HOST_NAME ]]; then
+  sed -i -e "s/^.*hostname:.*$/hostname: ${HOST_NAME}/" /app/.apt/opt/datadog-agent/agent/datadog.conf
+fi
+
 mkdir -p /app/.apt/opt/datadog-agent/agent/conf.d
+
+cat <<VAR > /app/.apt/opt/datadog-agent/agent/conf.d/mcache.yaml
+init_config:
+
+instances:
+  - url: production-cv.mgrhj0.cfg.usw2.cache.amazonaws.com
+  - url: production-rails.mgrhj0.cfg.usw2.cache.amazonaws.com
+    port: 11212
+VAR
+
 cat <<VAR > /app/.apt/opt/datadog-agent/agent/conf.d/redisdb.yaml
 init_config:
 
