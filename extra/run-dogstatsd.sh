@@ -13,12 +13,21 @@ else
 fi
 
 mkdir -p /app/.apt/opt/datadog-agent/agent/conf.d
-cat <<VAR > /app/.apt/opt/datadog-agent/agent/conf.d/redis.yaml
+cat <<VAR > /app/.apt/opt/datadog-agent/agent/conf.d/redisdb.yaml
 init_config:
 
   instances:
     - host: localhost
       port: 6379
+VAR
+
+cat <<VAR > /app/.apt/opt/datadog-agent/agent/conf.d/system_core.yaml
+init_config:
+
+instances:
+  # No configuration is needed for this check.
+  # A single instance needs to be defined with any value.
+  - foo: bar
 VAR
 
 (
