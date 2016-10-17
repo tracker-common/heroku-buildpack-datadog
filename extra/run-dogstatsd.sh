@@ -12,6 +12,15 @@ else
   exit 1
 fi
 
+mkdir -p /app/.apt/opt/datadog-agent/agent/conf.d
+cat <<VAR > /app/.apt/opt/datadog-agent/agent/conf.d/redis.yaml
+init_config:
+
+  instances:
+    - host: localhost
+      port: 6379
+VAR
+
 (
   # Unset other PYTHONPATH/PYTHONHOME variables before we start
   unset PYTHONHOME PYTHONPATH
