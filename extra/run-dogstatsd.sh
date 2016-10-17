@@ -16,9 +16,9 @@ mkdir -p /app/.apt/opt/datadog-agent/agent/conf.d
 cat <<VAR > /app/.apt/opt/datadog-agent/agent/conf.d/redisdb.yaml
 init_config:
 
-  instances:
-    - host: localhost
-      port: 6379
+instances:
+  - host: production-push-001.mgrhj0.0001.usw2.cache.amazonaws.com
+    port: 6379
 VAR
 
 cat <<VAR > /app/.apt/opt/datadog-agent/agent/conf.d/system_core.yaml
@@ -36,5 +36,7 @@ VAR
   # Load our library path first when starting up
   export LD_LIBRARY_PATH=/app/.apt/opt/datadog-agent/embedded/lib:$LD_LIBRARY_PATH
   mkdir -p /tmp/logs/datadog
+  /app/.apt/opt/datadog-agent/embedded/bin/python /app/.apt/opt/datadog-agent/agent/agent.py start &
+  /app/.apt/opt/datadog-agent/embedded/bin/python /app/.apt/opt/datadog-agent/agent/ddagent.py start &
   exec /app/.apt/opt/datadog-agent/embedded/bin/python /app/.apt/opt/datadog-agent/agent/dogstatsd.py start
 )
